@@ -1,0 +1,783 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Internship & Management Trainee Assessment</title>
+
+  <style>
+    :root{
+      --headerH: 128px;
+      --bg:#0b1220;
+      --panel:#0f1a2e;
+      --text:#eaf0ff;
+      --muted:#a9b6d3;
+      --border:rgba(255,255,255,.10);
+      --accent:#6ea8ff;
+      --accent2:#7c5cff;
+      --danger:#ffb020;
+      --ok:#34d399;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:16px;
+      --radius2:22px;
+      --focus: 0 0 0 4px rgba(110,168,255,.25);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      overflow: hidden;
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
+      background:
+        radial-gradient(1200px 700px at 20% -10%, rgba(124,92,255,.25), transparent 55%),
+        radial-gradient(900px 600px at 95% 10%, rgba(110,168,255,.25), transparent 55%),
+        linear-gradient(180deg, #070b14 0%, #0b1220 100%);
+      color:var(--text);
+      line-height:1.5;
+    }
+
+#content{
+  height: 100vh;       /* full screen */
+  overflow: auto;      /* only this scrolls */
+  padding-top: var(--headerH); /* space for fixed header */
+}
+
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 22px 16px 60px;
+    }
+
+    .topbar{
+      position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  backdrop-filter: blur(10px);
+  background: linear-gradient(180deg, rgba(11,18,32,.92) 0%, rgba(11,18,32,.72) 100%);
+  border-bottom: 1px solid var(--border);
+    }
+    .topbar-inner{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 14px 16px 10px;
+      display:flex;
+      gap:14px;
+      align-items:flex-start;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      min-width: 250px;
+    }
+    .logo{
+      width:42px;height:42px;border-radius:14px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      box-shadow: 0 10px 25px rgba(124,92,255,.25);
+      display:grid; place-items:center;
+      font-weight:800;
+      color:#081225;
+      letter-spacing:.5px;
+    }
+    .title{ display:flex; flex-direction:column; gap:2px; }
+    .title strong{ font-size: 14px; letter-spacing:.3px; }
+    .subtitle{ color:var(--muted); font-size: 12.5px; }
+
+    .right{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      align-items:flex-end;
+      min-width: 280px;
+    }
+    .pill-row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end; }
+    .pill{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 10px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      background: rgba(255,255,255,.04);
+      color:var(--muted);
+      font-size:12.5px;
+      white-space:nowrap;
+    }
+    .timer{
+      color: var(--text);
+      border-color: rgba(110,168,255,.35);
+      background: rgba(110,168,255,.08);
+      font-weight:700;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 5px rgba(110,168,255,.12);
+    }
+
+    /* Progress */
+    .progress-wrap{
+      width: 320px;
+      max-width: 100%;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      align-items:flex-end;
+    }
+    .progress-text{
+      color: var(--muted);
+      font-size: 12.5px;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      text-align:right;
+    }
+    .bar{
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      overflow:hidden;
+    }
+    .bar > div{
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius:999px;
+      transition: width .2s ease;
+    }
+
+    /* Navigator */
+    .nav{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 16px 12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .nav a{
+      text-decoration:none;
+      color: var(--text);
+      font-size: 12.5px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+    }
+    .nav a:hover{
+      transform: translateY(-1px);
+      border-color: rgba(110,168,255,.35);
+      background: rgba(110,168,255,.08);
+    }
+
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.05) 0%, rgba(255,255,255,.03) 100%);
+      border:1px solid var(--border);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      margin-top: 18px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    @media (min-width: 800px){
+      .grid.two{
+        grid-template-columns: 1.2fr .8fr;
+        align-items:start;
+      }
+    }
+
+    .h3{ font-size: 15px; margin: 0 0 8px; letter-spacing:.2px; }
+    .muted{ color:var(--muted); font-size: 13px; }
+    .warn{ color: var(--danger); font-size: 13px; }
+    .ok{ color: var(--ok); font-size: 13px; }
+
+    input[type="text"], textarea{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      outline:none;
+      transition: box-shadow .15s ease, border-color .15s ease;
+    }
+    textarea{ min-height: 110px; resize: vertical; }
+    input::placeholder, textarea::placeholder{ color: rgba(169,182,211,.7); }
+    input:focus, textarea:focus{
+      box-shadow: var(--focus);
+      border-color: rgba(110,168,255,.55);
+    }
+
+   .section{ margin-top: 18px; padding-top: 4px; scroll-margin-top: calc(var(--headerH) + 10px); }
+    .section-head{
+      display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom: 10px;
+    }
+    .section-title{ font-size: 14px; letter-spacing:.3px; margin:0; }
+    .section-badge{
+      font-size:12px; color: var(--muted);
+      border:1px solid var(--border);
+      border-radius:999px;
+      padding: 7px 10px;
+      background: rgba(255,255,255,.03);
+      white-space:nowrap;
+    }
+
+    .q{
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      margin: 12px 0;
+      transition: transform .12s ease, border-color .12s ease;
+    }
+    .q:hover{ transform: translateY(-1px); border-color: rgba(110,168,255,.22); }
+    .q h4{ margin:0 0 10px; font-size: 14px; font-weight: 650; }
+
+    .options{ display:grid; gap: 8px; }
+    .opt{
+      display:flex; gap:10px; align-items:flex-start;
+      padding: 10px 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.02);
+      cursor:pointer;
+      user-select:none;
+      transition: border-color .12s ease, background .12s ease;
+    }
+    .opt:hover{
+      border-color: rgba(110,168,255,.25);
+      background: rgba(110,168,255,.06);
+    }
+    .opt input{ margin-top: 2px; transform: scale(1.1); accent-color: var(--accent); }
+    .opt span{ color: var(--text); font-size: 13.5px; }
+
+    .actions{
+      display:flex;
+      gap: 12px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      margin-top: 10px;
+    }
+    .btn{
+      border: 1px solid rgba(110,168,255,.35);
+      background: linear-gradient(135deg, rgba(110,168,255,.25) 0%, rgba(124,92,255,.20) 100%);
+      color: var(--text);
+      padding: 12px 14px;
+      border-radius: 14px;
+      font-weight: 700;
+      cursor:pointer;
+      transition: transform .12s ease, opacity .12s ease;
+      box-shadow: 0 12px 30px rgba(0,0,0,.25);
+    }
+    .btn:hover{ transform: translateY(-1px); }
+    .btn:disabled{ opacity:.55; cursor:not-allowed; transform:none; }
+
+    .small{ font-size: 12.5px; color: var(--muted); }
+    .status{ min-width: 240px; }
+
+    @media print{
+      .topbar, .panel:last-of-type, .nav{ display:none; }
+      body{ background:#fff; color:#000; }
+      .panel,.q{ box-shadow:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="logo">MT</div>
+        <div class="title">
+          <strong>INTERNSHIP & MANAGEMENT TRAINEE ASSESSMENT</strong>
+          <div class="subtitle">oceanpick (pvt) ltd</div>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="pill-row">
+          <div class="pill timer" id="timer"><span class="dot"></span>Loading timer…</div>
+        </div>
+
+        <!-- Progress indicator -->
+        <div class="progress-wrap">
+          <div class="progress-text" id="progressText">Progress: 0/80 answered</div>
+          <div class="bar"><div id="progressBar"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section navigator -->
+    <div class="nav">
+      <a href="#secA">Section A</a>
+      <a href="#secB">Section B</a>
+      <a href="#secC">Section C</a>
+      <a href="#secD">Section D</a>
+      <a href="#secE">Section E</a>
+      <a href="#secF">Section F</a>
+      <a href="#submitArea">Submit</a>
+    </div>
+  </div>
+
+  <div id="content">
+  <div class="wrap">
+
+    <div class="panel">
+      <div class="grid two">
+        <div>
+          <h3 class="h3">Candidate details</h3>
+          <label class="muted" style="margin-bottom:8px;">Full Name</label>
+          <input id="name" type="text" placeholder="Enter your full name" required />
+          <div style="margin-top:10px" class="muted" id="autosaveStatus"></div>
+        </div>
+
+        <div>
+          <h3 class="h3">Instructions</h3>
+          <div class="muted">
+            • Answer all MCQs by selecting the most appropriate option<br/>
+            • Writing answers should be short (4–6 lines)<br/>
+            • Use clear and honest responses
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="form"></div>
+
+    <div class="panel" id="submitArea">
+      <div class="actions">
+        <button class="btn" id="submitBtn">Submit Test</button>
+        <div class="status">
+          <div id="status" class="small"></div>
+        </div>
+      </div>
+      <div class="small" style="margin-top:10px;">
+        Tip: Your answers auto-save. If the page reloads, your work should restore automatically.
+      </div>
+    </div>
+
+  </div>
+
+<script>
+/** Paste your Apps Script Web App /exec URL here */
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGQp-kkpFl1VNsWrv5K4cvRopr50C3c0I8oiDd-p4I16k63293sv49HsehKvCFeHPC/exec";
+
+/** Timer */
+const DURATION_MS = 90 * 60 * 1000;
+const STORAGE_KEY = "intern_test_v1";
+const startedAt = loadState()?.startedAt || Date.now();
+const deadline = startedAt + DURATION_MS;
+
+let submitted = false;
+let autosaveInterval = null;
+
+/** Sections */
+const SECTIONS = [
+  { id: "secA", title: "SECTION A: IQ & COGNITIVE ABILITY (MCQs)", from: 1, to: 15 },
+  { id: "secB", title: "SECTION B: APTITUDE & NUMERICAL REASONING (MCQs)", from: 16, to: 30 },
+  { id: "secC", title: "SECTION C: ENGLISH & COMMUNICATION (MCQs)", from: 31, to: 45 },
+  { id: "secD", title: "SECTION D: BUSINESS & WORKPLACE KNOWLEDGE (MCQs)", from: 46, to: 60 },
+  { id: "secE", title: "SECTION E: ATTITUDE & SITUATIONAL JUDGMENT (MCQs)", from: 61, to: 75 },
+];
+
+/** Questions (same content as before) */
+const MCQ = [
+  { id: 1, text: "Find the missing figure in the pattern: ▲ ■ ▲ ■ ▲ ___", options: ["▲", "■", "●", "◆"] },
+  { id: 2, text: "Find the odd one out: Dog – Cat – Cow – Chair", options: ["Dog", "Cat", "Cow", "Chair"] },
+  { id: 3, text: "If TRAIN is coded as UWBJO, how is PLANE coded?", options: ["QMBOF", "QMBNF", "QMBPG", "PMBNE"] },
+  { id: 4, text: "A is older than B. B is older than C. Who is the youngest?", options: ["A", "B", "C", "Cannot be determined"] },
+  { id: 5, text: "Which number comes next? 3, 9, 27, ___", options: ["54", "72", "81", "90"] },
+  { id: 6, text: "If 12 machines produce 300 units in 5 hours, how many units will 6 machines produce in the same time?", options: ["75", "100", "150", "200"] },
+  { id: 7, text: "Which word does NOT belong? Read – Write – Listen – Sleep", options: ["Read", "Write", "Listen", "Sleep"] },
+  { id: 8, text: "Find the next number: 2, 6, 12, 20, ___", options: ["24", "26", "30", "32"] },
+  { id: 9, text: "If ALL interns are learners and SOME learners are leaders, which statement is true?", options: ["All leaders are interns", "Some interns may be leaders", "No intern is a leader", "All learners are interns"] },
+  { id: 10, text: "Which shape has the fewest sides?", options: ["Triangle", "Square", "Pentagon", "Hexagon"] },
+  { id: 11, text: "Complete the analogy: Pen : Write :: Knife : ___", options: ["Cut", "Draw", "Hold", "Break"] },
+  { id: 12, text: "Find the odd number: 12, 18, 24, 30, 35", options: ["12", "18", "30", "35"] },
+  { id: 13, text: "If today is Monday, what day will it be after 23 days?", options: ["Tuesday", "Wednesday", "Thursday", "Friday"] },
+  { id: 14, text: "Which number is the smallest?", options: ["0.75", "¾", "0.70", "7/10"] },
+  { id: 15, text: "Which completes the series? A, C, F, J, ___", options: ["M", "N", "O", "P"] },
+
+  { id: 16, text: "If 4 workers take 10 days to complete a task, how many days will 8 workers take?", options: ["2", "4", "5", "10"] },
+  { id: 17, text: "25% of 200 is:", options: ["25", "40", "50", "75"] },
+  { id: 18, text: "A product costs 1,000. After a 10% discount, the price is:", options: ["850", "900", "950", "1,100"] },
+  { id: 19, text: "Which fraction is the largest?", options: ["1/4", "2/5", "3/8", "5/12"] },
+  { id: 20, text: "If you buy 3 items at 120 each, what is the total cost?", options: ["240", "300", "360", "420"] },
+  { id: 21, text: "If x + 5 = 12, x equals:", options: ["5", "6", "7", "8"] },
+  { id: 22, text: "What is the average of 10, 20, and 30?", options: ["15", "20", "25", "30"] },
+  { id: 23, text: "A train travels 60 km in 1 hour. How far will it travel in 3 hours?", options: ["120 km", "150 km", "180 km", "200 km"] },
+  { id: 24, text: "If 1 USD = 300 LKR, how much is 5 USD?", options: ["1,200", "1,300", "1,500", "1,800"] },
+  { id: 25, text: "Which number is even?", options: ["17", "21", "33", "40"] },
+  { id: 26, text: "If you save 500 per month, how much will you save in 6 months?", options: ["2,000", "2,500", "3,000", "3,500"] },
+  { id: 27, text: "Which percentage is highest?", options: ["0.6", "60%", "3/5", "All are equal"] },
+  { id: 28, text: "What is 15% of 100?", options: ["10", "15", "20", "25"] },
+  { id: 29, text: "If a task takes 2 hours, how long will 3 identical tasks take?", options: ["4 hours", "5 hours", "6 hours", "8 hours"] },
+  { id: 30, text: "Which is NOT a number?", options: ["12", "0", "−3", "√"] },
+
+  { id: 31, text: "Choose the most professional sentence:", options: [
+      "I didn’t do it because it was hard",
+      "I was busy, so I couldn’t finish",
+      "The task was delayed due to unforeseen issues and will be completed shortly",
+      "I forgot to do it"
+    ]},
+  { id: 32, text: "Choose the correct sentence:", options: [
+      "He don’t understand the task",
+      "He doesn’t understand the task",
+      "He didn’t understood the task",
+      "He don’t understands"
+    ]},
+  { id: 33, text: "The opposite of “confidential” is:", options: ["Private", "Secure", "Public", "Restricted"] },
+  { id: 34, text: "Which word best fits? “Please ___ the report before submission.”", options: ["Look", "See", "Check", "Watch"] },
+  { id: 35, text: "A professional email should be:", options: ["Emotional", "Casual", "Clear and polite", "Long and detailed"] },
+  { id: 36, text: "Which is a polite request?", options: ["Send me the file now", "I want the file", "Please send the file at your convenience", "Why haven’t you sent it?"] },
+  { id: 37, text: "Choose the correct spelling:", options: ["Responsibility", "Responsability", "Responsibilty", "Responsibilitty"] },
+  { id: 38, text: "Which greeting is best for a formal email?", options: ["Hi buddy", "Hey", "Dear Sir/Madam", "Hello friend"] },
+  { id: 39, text: "Which sentence shows accountability?", options: ["I was not told clearly", "The mistake happened", "I take responsibility and will correct it", "It was not my fault"] },
+  { id: 40, text: "Choose the correct option: “She has ___ the report already.”", options: ["Submit", "Submitted", "Submitting", "Submits"] },
+  { id: 41, text: "Which word means “working together”?", options: ["Conflict", "Teamwork", "Control", "Delay"] },
+  { id: 42, text: "Which is inappropriate in a workplace email?", options: ["Clear subject", "Polite tone", "Emojis", "Proper closing"] },
+  { id: 43, text: "Choose the correct sentence:", options: ["We was late", "We were late", "We is late", "We be late"] },
+  { id: 44, text: "Which is the best closing?", options: ["Bye", "Cheers mate", "Regards", "See ya"] },
+  { id: 45, text: "Which word means “on time”?", options: ["Delay", "Punctual", "Late", "Ignore"] },
+
+  { id: 46, text: "The main purpose of teamwork is to:", options: ["Reduce effort", "Share responsibility", "Achieve common goals", "Avoid work"] },
+  { id: 47, text: "What should an intern do if unsure about a task?", options: ["Guess", "Ignore", "Ask for clarification", "Delay"] },
+  { id: 48, text: "Confidential information should be:", options: ["Shared with friends", "Posted online", "Protected", "Ignored"] },
+  { id: 49, text: "Professional behavior includes:", options: ["Coming late", "Meeting deadlines", "Using phone during meetings", "Ignoring instructions"] },
+  { id: 50, text: "Efficiency means:", options: ["Doing tasks slowly", "Doing the right tasks", "Doing tasks with minimum resources", "Avoiding work"] },
+  { id: 51, text: "Which shows good work ethics?", options: ["Leaving early", "Blaming others", "Taking responsibility", "Avoiding feedback"] },
+  { id: 52, text: "Who is responsible for learning during an internship?", options: ["Supervisor only", "HR only", "Intern", "Colleagues"] },
+  { id: 53, text: "Workplace safety means:", options: ["Working fast", "Ignoring rules", "Following safety procedures", "Taking risks"] },
+  { id: 54, text: "A deadline is:", options: ["A suggestion", "A target completion date", "Optional", "Flexible always"] },
+  { id: 55, text: "Which behavior damages teamwork?", options: ["Cooperation", "Communication", "Conflict", "Support"] },
+  { id: 56, text: "Feedback is given to:", options: ["Punish", "Improve performance", "Demotivate", "Control"] },
+  { id: 57, text: "Which shows professionalism?", options: ["Arguing publicly", "Accepting feedback", "Ignoring instructions", "Being defensive"] },
+  { id: 58, text: "An intern should report to:", options: ["Anyone", "Supervisor", "Friends", "No one"] },
+  { id: 59, text: "Which is most important at work?", options: ["Talent only", "Attitude only", "Skills only", "Attitude and skills"] },
+  { id: 60, text: "Which action builds trust?", options: ["Hiding mistakes", "Taking credit for others’ work", "Being honest", "Avoiding responsibility"] },
+
+  { id: 61, text: "You are given a task outside your comfort zone. What do you do?", options: ["Refuse", "Delay", "Try to learn and attempt", "Complain"] },
+  { id: 62, text: "A teammate is not contributing. What should you do FIRST?", options: ["Complain to management", "Ignore", "Speak politely to the teammate", "Do their work"] },
+  { id: 63, text: "You make a mistake. What is the best response?", options: ["Hide it", "Blame others", "Inform supervisor and fix it", "Wait"] },
+  { id: 64, text: "Your supervisor criticizes your work. You should:", options: ["Argue", "Ignore", "Listen and improve", "Feel demotivated"] },
+  { id: 65, text: "You have multiple tasks with the same deadline. What do you do?", options: ["Panic", "Random order", "Prioritize", "Delay"] },
+  { id: 66, text: "What shows a growth mindset?", options: ["Avoiding challenges", "Asking for feedback", "Blaming others", "Doing minimum work"] },
+  { id: 67, text: "A colleague needs help and you are free. You should:", options: ["Ignore", "Help if possible", "Report", "Leave"] },
+  { id: 68, text: "If instructions are unclear, you should:", options: ["Guess", "Ask for clarification", "Ignore", "Delay"] },
+  { id: 69, text: "Which attitude is preferred at work?", options: ["Defensive", "Cooperative", "Lazy", "Negative"] },
+  { id: 70, text: "When faced with pressure, you should:", options: ["Panic", "Give up", "Stay calm and prioritize", "Avoid work"] },
+  { id: 71, text: "Which behavior shows ownership?", options: ["Blaming others", "Taking responsibility", "Avoiding tasks", "Complaining"] },
+  { id: 72, text: "What should you do if you finish work early?", options: ["Leave", "Relax", "Ask for more work", "Use phone"] },
+  { id: 73, text: "Ethical behavior means:", options: ["Doing what is easy", "Doing what is right", "Doing what benefits you", "Doing nothing"] },
+  { id: 74, text: "What motivates good performance?", options: ["Fear", "Learning and growth", "Avoiding responsibility", "Competition only"] },
+  { id: 75, text: "Which is a positive workplace habit?", options: ["Procrastination", "Punctuality", "Excuses", "Complaints"] },
+];
+
+const WRITING = [
+  { id: 76, text: "Why do you want to join this internship program?" },
+  { id: 77, text: "Describe a situation where you took responsibility." },
+  { id: 78, text: "What do you expect to learn during this internship?" },
+  { id: 79, text: "How do you handle feedback or criticism?" },
+  { id: 80, text: "Where do you see yourself in 3–5 years?" },
+];
+
+/** Render **/
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, s => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[s]));
+}
+
+function renderMCQ(q) {
+  const div = document.createElement("div");
+  div.className = "q";
+  div.innerHTML = `
+    <h4>Q${q.id}. ${escapeHtml(q.text)}</h4>
+    <div class="options">
+      ${q.options.map((opt, idx) => `
+        <label class="opt">
+          <input type="radio" name="mcq_${q.id}" value="${idx}" />
+          <span>${escapeHtml(opt)}</span>
+        </label>
+      `).join("")}
+    </div>
+  `;
+  return div;
+}
+
+function renderWriting(w) {
+  const div = document.createElement("div");
+  div.className = "q";
+  div.innerHTML = `
+    <h4>Q${w.id}. ${escapeHtml(w.text)}</h4>
+    <textarea name="writing_${w.id}" placeholder="Write 4–6 lines..."></textarea>
+  `;
+  return div;
+}
+
+function renderAll() {
+  const container = document.getElementById("form");
+  container.innerHTML = "";
+
+  // Sections A–E
+  for (const sec of SECTIONS) {
+    const secDiv = document.createElement("div");
+    secDiv.className = "section";
+    secDiv.id = sec.id;
+    secDiv.innerHTML = `
+      <div class="section-head">
+        <h3 class="section-title">${escapeHtml(sec.title)}</h3>
+        <div class="section-badge">Q${sec.from}–Q${sec.to}</div>
+      </div>
+    `;
+    for (let qid = sec.from; qid <= sec.to; qid++) {
+      const q = MCQ.find(x => x.id === qid);
+      secDiv.appendChild(renderMCQ(q));
+    }
+    container.appendChild(secDiv);
+  }
+
+  // Section F
+  const writeDiv = document.createElement("div");
+  writeDiv.className = "section";
+  writeDiv.id = "secF";
+  writeDiv.innerHTML = `
+    <div class="section-head">
+      <h3 class="section-title">SECTION F: SHORT WRITING (5 Questions)</h3>
+      <div class="section-badge">Q76–Q80</div>
+    </div>
+    <div class="muted">Answer briefly (4–6 lines each)</div>
+  `;
+  for (const w of WRITING) writeDiv.appendChild(renderWriting(w));
+  container.appendChild(writeDiv);
+}
+
+/** Answer collection **/
+function collectAnswers() {
+  const mcqAnswers = [];
+  for (let i = 1; i <= 75; i++) {
+    const checked = document.querySelector(`input[name="mcq_${i}"]:checked`);
+    mcqAnswers.push(checked ? Number(checked.value) : null);
+  }
+
+  const writingAnswers = [];
+  for (let i = 76; i <= 80; i++) {
+    const ta = document.querySelector(`textarea[name="writing_${i}"]`);
+    writingAnswers.push(ta ? ta.value.trim() : "");
+  }
+
+  return { mcqAnswers, writingAnswers };
+}
+
+/** Progress indicator **/
+function computeAnswered() {
+  let answered = 0;
+
+  // Name counts as answered if filled
+  const name = document.getElementById("name").value.trim();
+  if (name) answered++;
+
+  // MCQs answered
+  for (let i = 1; i <= 75; i++) {
+    if (document.querySelector(`input[name="mcq_${i}"]:checked`)) answered++;
+  }
+
+  // Writing answered (non-empty)
+  for (let i = 76; i <= 80; i++) {
+    const ta = document.querySelector(`textarea[name="writing_${i}"]`);
+    if (ta && ta.value.trim().length > 0) answered++;
+  }
+
+  return answered;
+}
+
+function updateProgress() {
+  const total = 81; // 1 name + 75 mcq + 5 writing
+  const answered = computeAnswered();
+
+  const pct = Math.max(0, Math.min(100, Math.round((answered / total) * 100)));
+  document.getElementById("progressText").textContent = `Progress: ${answered}/${total} answered (${pct}%)`;
+  document.getElementById("progressBar").style.width = pct + "%";
+}
+
+/** Autosave **/
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch { return null; }
+}
+
+function saveState() {
+  if (submitted) return;
+
+  const name = document.getElementById("name").value.trim();
+  const { mcqAnswers, writingAnswers } = collectAnswers();
+  const st = { name, mcqAnswers, writingAnswers, startedAt };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(st));
+
+  const el = document.getElementById("autosaveStatus");
+  el.textContent = "Auto-saved.";
+  setTimeout(() => { el.textContent = ""; }, 900);
+}
+
+function restoreState() {
+  const st = loadState();
+  if (!st) return;
+
+  if (st.name) document.getElementById("name").value = st.name;
+
+  if (Array.isArray(st.mcqAnswers) && st.mcqAnswers.length === 75) {
+    for (let i = 1; i <= 75; i++) {
+      const v = st.mcqAnswers[i - 1];
+      if (v === 0 || v === 1 || v === 2 || v === 3) {
+        const input = document.querySelector(`input[name="mcq_${i}"][value="${v}"]`);
+        if (input) input.checked = true;
+      }
+    }
+  }
+
+  if (Array.isArray(st.writingAnswers) && st.writingAnswers.length === 5) {
+    for (let i = 76; i <= 80; i++) {
+      const ta = document.querySelector(`textarea[name="writing_${i}"]`);
+      if (ta) ta.value = st.writingAnswers[i - 76] || "";
+    }
+  }
+}
+
+/** Timer **/
+function startTimer() {
+  const timerEl = document.getElementById("timer");
+  const t = setInterval(() => {
+    const remaining = deadline - Date.now();
+
+    if (remaining <= 0) {
+      timerEl.textContent = "Time is up — submitting…";
+      clearInterval(t);
+      submitTest(true);
+      return;
+    }
+
+    const totalSec = Math.floor(remaining / 1000);
+    const mm = String(Math.floor(totalSec / 60)).padStart(2, "0");
+    const ss = String(totalSec % 60).padStart(2, "0");
+    timerEl.textContent = `Time left: ${mm}:${ss}`;
+  }, 250);
+}
+
+/** Submit **/
+async function submitTest(auto = false) {
+  if (submitted) return;
+  submitted = true;
+
+  const status = document.getElementById("status");
+  const btn = document.getElementById("submitBtn");
+  btn.disabled = true;
+  status.textContent = auto ? "Auto-submitting…" : "Submitting…";
+  status.className = "small";
+
+  if (!SCRIPT_URL || !SCRIPT_URL.includes("/exec")) {
+    status.textContent = "Error: SCRIPT_URL is not set correctly.";
+    status.className = "warn";
+    btn.disabled = false;
+    submitted = false;
+    return;
+  }
+
+  const name = document.getElementById("name").value.trim();
+  if (!name) {
+    status.textContent = "Please enter your full name before submitting.";
+    status.className = "warn";
+    btn.disabled = false;
+    submitted = false;
+    return;
+  }
+
+  // Confirmation for manual submit only
+  if (!auto) {
+    const ok = confirm("Are you sure you want to submit? You cannot edit after submission.");
+    if (!ok) {
+      btn.disabled = false;
+      submitted = false;
+      status.textContent = "Submission cancelled. You can continue the test.";
+      status.className = "muted";
+      return;
+    }
+  }
+
+  const { mcqAnswers, writingAnswers } = collectAnswers();
+  const payload = { name, mcqAnswers, writingAnswers, startedAt, submittedAt: Date.now() };
+
+  try {
+    const res = await fetch(SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload),
+    });
+
+    const json = await res.json();
+    if (!json.ok) throw new Error(json.error || "Submission failed");
+
+    status.textContent = "Submitted successfully. Thank you.";
+    status.className = "ok";
+    document.getElementById("submitBtn").style.display = "none";
+    localStorage.removeItem(STORAGE_KEY);
+
+    if (autosaveInterval) clearInterval(autosaveInterval);
+
+  } catch (e) {
+    status.textContent = `Error: ${e.message}`;
+    status.className = "warn";
+    btn.disabled = false;
+    submitted = false;
+  }
+}
+
+/** Wire up **/
+renderAll();
+restoreState();
+startTimer();
+updateProgress();
+
+autosaveInterval = setInterval(() => { saveState(); updateProgress(); }, 20000);
+
+document.addEventListener("change", () => { saveState(); updateProgress(); });
+document.addEventListener("input", (e) => {
+  if (e.target && (e.target.matches("textarea") || e.target.matches("#name"))) {
+    saveState();
+    updateProgress();
+  }
+});
+
+// also update progress on radio clicks (important)
+document.addEventListener("click", (e) => {
+  if (e.target && e.target.matches('input[type="radio"]')) updateProgress();
+});
+
+document.getElementById("submitBtn").addEventListener("click", () => submitTest(false));
+</script>
+
+  </div>
+</div>
+</body>
+</html>
+
+
+
+
