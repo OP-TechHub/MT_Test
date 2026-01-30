@@ -37,11 +37,11 @@
       line-height:1.5;
     }
 
-#content{
-  height: 100vh;       /* full screen */
-  overflow: auto;      /* only this scrolls */
-  padding-top: var(--headerH); /* space for fixed header */
-}
+    #content{
+      height: 100vh;
+      overflow: auto;
+      padding-top: var(--headerH);
+    }
 
     .wrap{
       max-width: 980px;
@@ -51,13 +51,11 @@
 
     .topbar{
       position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 9999;
-  backdrop-filter: blur(10px);
-  background: linear-gradient(180deg, rgba(11,18,32,.92) 0%, rgba(11,18,32,.72) 100%);
-  border-bottom: 1px solid var(--border);
+      top: 0; left: 0; right: 0;
+      z-index: 9999;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(11,18,32,.92) 0%, rgba(11,18,32,.72) 100%);
+      border-bottom: 1px solid var(--border);
     }
     .topbar-inner{
       max-width: 980px;
@@ -70,232 +68,71 @@
       flex-wrap:wrap;
     }
 
-    .brand{
-      display:flex;
-      gap:12px;
-      align-items:center;
-      min-width: 250px;
-    }
+    .brand{ display:flex; gap:12px; align-items:center; min-width: 250px; }
     .logo{
       width:42px;height:42px;border-radius:14px;
       background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
       box-shadow: 0 10px 25px rgba(124,92,255,.25);
-      display:grid; place-items:center;
-      font-weight:800;
-      color:#081225;
-      letter-spacing:.5px;
+      display:grid; place-items:center; font-weight:800; color:#081225;
     }
     .title{ display:flex; flex-direction:column; gap:2px; }
     .title strong{ font-size: 14px; letter-spacing:.3px; }
     .subtitle{ color:var(--muted); font-size: 12.5px; }
 
-    .right{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      align-items:flex-end;
-      min-width: 280px;
-    }
+    .right{ display:flex; flex-direction:column; gap:10px; align-items:flex-end; min-width: 280px; }
     .pill-row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end; }
     .pill{
-      display:inline-flex; gap:8px; align-items:center;
-      padding:8px 10px;
-      border:1px solid var(--border);
-      border-radius:999px;
-      background: rgba(255,255,255,.04);
-      color:var(--muted);
-      font-size:12.5px;
-      white-space:nowrap;
+      display:inline-flex; gap:8px; align-items:center; padding:8px 10px;
+      border:1px solid var(--border); border-radius:999px;
+      background: rgba(255,255,255,.04); color:var(--muted); font-size:12.5px;
     }
-    .timer{
-      color: var(--text);
-      border-color: rgba(110,168,255,.35);
-      background: rgba(110,168,255,.08);
-      font-weight:700;
-    }
-    .dot{
-      width:8px;height:8px;border-radius:999px;
-      background: var(--accent);
-      box-shadow: 0 0 0 5px rgba(110,168,255,.12);
-    }
+    .timer{ color: var(--text); border-color: rgba(110,168,255,.35); background: rgba(110,168,255,.08); font-weight:700; }
+    .dot{ width:8px; height:8px; border-radius:999px; background: var(--accent); box-shadow: 0 0 0 5px rgba(110,168,255,.12); }
 
-    /* Progress */
-    .progress-wrap{
-      width: 320px;
-      max-width: 100%;
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-      align-items:flex-end;
-    }
-    .progress-text{
-      color: var(--muted);
-      font-size: 12.5px;
-      display:flex;
-      gap:8px;
-      align-items:center;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-      text-align:right;
-    }
-    .bar{
-      width: 100%;
-      height: 10px;
-      border-radius: 999px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.04);
-      overflow:hidden;
-    }
-    .bar > div{
-      height:100%;
-      width:0%;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      border-radius:999px;
-      transition: width .2s ease;
-    }
+    .progress-wrap{ width: 320px; max-width: 100%; display:flex; flex-direction:column; gap:6px; align-items:flex-end; }
+    .progress-text{ color: var(--muted); font-size: 12.5px; text-align:right; }
+    .bar{ width: 100%; height: 10px; border-radius: 999px; border:1px solid var(--border); background: rgba(255,255,255,.04); overflow:hidden; }
+    .bar > div{ height:100%; width:0%; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width .2s ease; }
 
-    /* Navigator */
-    .nav{
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 0 16px 12px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
+    .nav{ max-width: 980px; margin: 0 auto; padding: 0 16px 12px; display:flex; gap:10px; flex-wrap:wrap; }
     .nav a{
-      text-decoration:none;
-      color: var(--text);
-      font-size: 12.5px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      text-decoration:none; color: var(--text); font-size: 12.5px; padding: 8px 10px;
+      border-radius: 999px; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.03);
     }
-    .nav a:hover{
-      transform: translateY(-1px);
-      border-color: rgba(110,168,255,.35);
-      background: rgba(110,168,255,.08);
-    }
+    .nav a:hover{ border-color: rgba(110,168,255,.35); background: rgba(110,168,255,.08); }
 
-    .panel{
-      background: linear-gradient(180deg, rgba(255,255,255,.05) 0%, rgba(255,255,255,.03) 100%);
-      border:1px solid var(--border);
-      border-radius: var(--radius2);
-      box-shadow: var(--shadow);
-      padding: 18px;
-      margin-top: 18px;
-    }
+    .panel{ background: linear-gradient(180deg, rgba(255,255,255,.05) 0%, rgba(255,255,255,.03) 100%); border:1px solid var(--border); border-radius: var(--radius2); box-shadow: var(--shadow); padding: 18px; margin-top: 18px; }
+    .grid{ display:grid; grid-template-columns: 1fr; gap: 14px; }
+    @media (min-width: 800px){ .grid.two{ grid-template-columns: 1.2fr .8fr; } }
 
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-    }
-    @media (min-width: 800px){
-      .grid.two{
-        grid-template-columns: 1.2fr .8fr;
-        align-items:start;
-      }
-    }
-
-    .h3{ font-size: 15px; margin: 0 0 8px; letter-spacing:.2px; }
+    .h3{ font-size: 15px; margin: 0 0 8px; }
     .muted{ color:var(--muted); font-size: 13px; }
     .warn{ color: var(--danger); font-size: 13px; }
     .ok{ color: var(--ok); font-size: 13px; }
 
-    input[type="text"], textarea{
-      width:100%;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.04);
-      color: var(--text);
-      outline:none;
-      transition: box-shadow .15s ease, border-color .15s ease;
-    }
+    input[type="text"], textarea{ width:100%; padding: 12px; border-radius: 14px; border: 1px solid var(--border); background: rgba(255,255,255,.04); color: var(--text); outline:none; }
     textarea{ min-height: 110px; resize: vertical; }
-    input::placeholder, textarea::placeholder{ color: rgba(169,182,211,.7); }
-    input:focus, textarea:focus{
-      box-shadow: var(--focus);
-      border-color: rgba(110,168,255,.55);
-    }
 
-   .section{ margin-top: 18px; padding-top: 4px; scroll-margin-top: calc(var(--headerH) + 10px); }
-    .section-head{
-      display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom: 10px;
-    }
-    .section-title{ font-size: 14px; letter-spacing:.3px; margin:0; }
-    .section-badge{
-      font-size:12px; color: var(--muted);
-      border:1px solid var(--border);
-      border-radius:999px;
-      padding: 7px 10px;
-      background: rgba(255,255,255,.03);
-      white-space:nowrap;
-    }
+    .section{ margin-top: 18px; scroll-margin-top: calc(var(--headerH) + 10px); }
+    .section-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom: 10px; }
+    .section-title{ font-size: 14px; margin:0; }
+    .section-badge{ font-size:12px; color: var(--muted); border:1px solid var(--border); border-radius:999px; padding: 7px 10px; background: rgba(255,255,255,.03); }
 
-    .q{
-      background: rgba(255,255,255,.03);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 14px;
-      margin: 12px 0;
-      transition: transform .12s ease, border-color .12s ease;
-    }
-    .q:hover{ transform: translateY(-1px); border-color: rgba(110,168,255,.22); }
-    .q h4{ margin:0 0 10px; font-size: 14px; font-weight: 650; }
+    .q{ background: rgba(255,255,255,.03); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; margin: 12px 0; }
+    .q h4{ margin:0 0 10px; font-size: 14px; }
 
     .options{ display:grid; gap: 8px; }
-    .opt{
-      display:flex; gap:10px; align-items:flex-start;
-      padding: 10px 10px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.02);
-      cursor:pointer;
-      user-select:none;
-      transition: border-color .12s ease, background .12s ease;
-    }
-    .opt:hover{
-      border-color: rgba(110,168,255,.25);
-      background: rgba(110,168,255,.06);
-    }
-    .opt input{ margin-top: 2px; transform: scale(1.1); accent-color: var(--accent); }
-    .opt span{ color: var(--text); font-size: 13.5px; }
+    .opt{ display:flex; gap:10px; padding: 10px; border-radius: 14px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); cursor:pointer; }
+    .opt:hover{ border-color: rgba(110,168,255,.25); background: rgba(110,168,255,.06); }
 
-    .actions{
-      display:flex;
-      gap: 12px;
-      align-items:center;
-      justify-content:space-between;
-      flex-wrap:wrap;
-      margin-top: 10px;
-    }
     .btn{
       border: 1px solid rgba(110,168,255,.35);
       background: linear-gradient(135deg, rgba(110,168,255,.25) 0%, rgba(124,92,255,.20) 100%);
-      color: var(--text);
-      padding: 12px 14px;
-      border-radius: 14px;
-      font-weight: 700;
-      cursor:pointer;
-      transition: transform .12s ease, opacity .12s ease;
-      box-shadow: 0 12px 30px rgba(0,0,0,.25);
+      color: var(--text); padding: 12px 14px; border-radius: 14px; font-weight: 700; cursor:pointer;
     }
-    .btn:hover{ transform: translateY(-1px); }
-    .btn:disabled{ opacity:.55; cursor:not-allowed; transform:none; }
+    .btn:disabled{ opacity:.55; cursor:not-allowed; }
 
-    .small{ font-size: 12.5px; color: var(--muted); }
-    .status{ min-width: 240px; }
-
-    @media print{
-      .topbar, .panel:last-of-type, .nav{ display:none; }
-      body{ background:#fff; color:#000; }
-      .panel,.q{ box-shadow:none; }
-    }
+    @media print{ .topbar, .nav, #submitArea{ display:none; } }
   </style>
 </head>
 
@@ -309,94 +146,73 @@
           <div class="subtitle">oceanpick (pvt) ltd</div>
         </div>
       </div>
-
       <div class="right">
         <div class="pill-row">
           <div class="pill timer" id="timer"><span class="dot"></span>Loading timer…</div>
         </div>
-
-        <!-- Progress indicator -->
         <div class="progress-wrap">
-          <div class="progress-text" id="progressText">Progress: 0/80 answered</div>
+          <div class="progress-text" id="progressText">Progress: 0/81 answered</div>
           <div class="bar"><div id="progressBar"></div></div>
         </div>
       </div>
     </div>
-
-    <!-- Section navigator -->
     <div class="nav">
-      <a href="#secA">Section A</a>
-      <a href="#secB">Section B</a>
-      <a href="#secC">Section C</a>
-      <a href="#secD">Section D</a>
-      <a href="#secE">Section E</a>
-      <a href="#secF">Section F</a>
+      <a href="#secA">Section A</a> <a href="#secB">Section B</a> <a href="#secC">Section C</a> 
+      <a href="#secD">Section D</a> <a href="#secE">Section E</a> <a href="#secF">Section F</a> 
       <a href="#submitArea">Submit</a>
     </div>
   </div>
 
   <div id="content">
-  <div class="wrap">
-
-    <div class="panel">
-      <div class="grid two">
-        <div>
-          <h3 class="h3">Candidate details</h3>
-          <label class="muted" style="margin-bottom:8px;">Full Name</label>
-          <input id="name" type="text" placeholder="Enter your full name" required />
-          <div style="margin-top:10px" class="muted" id="autosaveStatus"></div>
-        </div>
-
-        <div>
-          <h3 class="h3">Instructions</h3>
-          <div class="muted">
-            • Answer all MCQs by selecting the most appropriate option<br/>
-            • Writing answers should be short (4–6 lines)<br/>
-            • Use clear and honest responses
+    <div class="wrap">
+      <div class="panel">
+        <div class="grid two">
+          <div>
+            <h3 class="h3">Candidate details</h3>
+            <input id="name" type="text" placeholder="Enter your full name" required />
+            <div style="margin-top:10px" class="muted" id="autosaveStatus"></div>
+          </div>
+          <div>
+            <h3 class="h3">Instructions</h3>
+            <div class="muted">• Answer all MCQs<br/>• Writing answers: 4–6 lines</div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="panel" id="form"></div>
+      <div class="panel" id="form"></div>
 
-    <div class="panel" id="submitArea">
-      <div class="actions">
-        <button class="btn" id="submitBtn">Submit Test</button>
-        <div class="status">
+      <div class="panel" id="submitArea">
+        <div class="actions" style="display:flex; justify-content:space-between; align-items:center;">
+          <button class="btn" id="submitBtn">Submit Test</button>
           <div id="status" class="small"></div>
         </div>
       </div>
-      <div class="small" style="margin-top:10px;">
-        Tip: Your answers auto-save. If the page reloads, your work should restore automatically.
-      </div>
     </div>
-
   </div>
 
 <script>
-/** Paste your Apps Script Web App /exec URL here */
+/** 1. CONFIGURATION **/
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyvuPRwoP2AM2T-7ubO-3ss2WQFUX9WCpqDX-u6be2wwZe7gq1Z6u8z2z-slJVfWcwj/exec";
-
-/** Timer */
 const DURATION_MS = 90 * 60 * 1000;
 const STORAGE_KEY = "intern_test_v1";
-const startedAt = loadState()?.startedAt || Date.now();
-const deadline = startedAt + DURATION_MS;
 
+/** 2. STATE **/
 let submitted = false;
 let autosaveInterval = null;
+const startedAt = (function(){
+  const saved = localStorage.getItem(STORAGE_KEY);
+  return saved ? JSON.parse(saved).startedAt : Date.now();
+})();
+const deadline = startedAt + DURATION_MS;
 
-/** Sections */
 const SECTIONS = [
-  { id: "secA", title: "SECTION A: IQ & COGNITIVE ABILITY (MCQs)", from: 1, to: 15 },
-  { id: "secB", title: "SECTION B: APTITUDE & NUMERICAL REASONING (MCQs)", from: 16, to: 30 },
-  { id: "secC", title: "SECTION C: ENGLISH & COMMUNICATION (MCQs)", from: 31, to: 45 },
-  { id: "secD", title: "SECTION D: BUSINESS & WORKPLACE KNOWLEDGE (MCQs)", from: 46, to: 60 },
-  { id: "secE", title: "SECTION E: ATTITUDE & SITUATIONAL JUDGMENT (MCQs)", from: 61, to: 75 },
+  { id: "secA", title: "SECTION A: IQ & COGNITIVE ABILITY", from: 1, to: 15 },
+  { id: "secB", title: "SECTION B: APTITUDE & NUMERICAL REASONING", from: 16, to: 30 },
+  { id: "secC", title: "SECTION C: ENGLISH & COMMUNICATION", from: 31, to: 45 },
+  { id: "secD", title: "SECTION D: BUSINESS & WORKPLACE KNOWLEDGE", from: 46, to: 60 },
+  { id: "secE", title: "SECTION E: ATTITUDE & SITUATIONAL JUDGMENT", from: 61, to: 75 }
 ];
 
-/** Questions (same content as before) */
 const MCQ = [
   { id: 1, text: "Find the missing figure in the pattern: ▲ ■ ▲ ■ ▲ ___", options: ["▲", "■", "●", "◆"] },
   { id: 2, text: "Find the odd one out: Dog – Cat – Cow – Chair", options: ["Dog", "Cat", "Cow", "Chair"] },
@@ -413,7 +229,6 @@ const MCQ = [
   { id: 13, text: "If today is Monday, what day will it be after 23 days?", options: ["Tuesday", "Wednesday", "Thursday", "Friday"] },
   { id: 14, text: "Which number is the smallest?", options: ["0.75", "¾", "0.70", "7/10"] },
   { id: 15, text: "Which completes the series? A, C, F, J, ___", options: ["M", "N", "O", "P"] },
-
   { id: 16, text: "If 4 workers take 10 days to complete a task, how many days will 8 workers take?", options: ["2", "4", "5", "10"] },
   { id: 17, text: "25% of 200 is:", options: ["25", "40", "50", "75"] },
   { id: 18, text: "A product costs 1,000. After a 10% discount, the price is:", options: ["850", "900", "950", "1,100"] },
@@ -429,19 +244,8 @@ const MCQ = [
   { id: 28, text: "What is 15% of 100?", options: ["10", "15", "20", "25"] },
   { id: 29, text: "If a task takes 2 hours, how long will 3 identical tasks take?", options: ["4 hours", "5 hours", "6 hours", "8 hours"] },
   { id: 30, text: "Which is NOT a number?", options: ["12", "0", "−3", "√"] },
-
-  { id: 31, text: "Choose the most professional sentence:", options: [
-      "I didn’t do it because it was hard",
-      "I was busy, so I couldn’t finish",
-      "The task was delayed due to unforeseen issues and will be completed shortly",
-      "I forgot to do it"
-    ]},
-  { id: 32, text: "Choose the correct sentence:", options: [
-      "He don’t understand the task",
-      "He doesn’t understand the task",
-      "He didn’t understood the task",
-      "He don’t understands"
-    ]},
+  { id: 31, text: "Choose the most professional sentence:", options: ["I didn’t do it because it was hard", "I was busy, so I couldn’t finish", "The task was delayed due to unforeseen issues and will be completed shortly", "I forgot to do it"] },
+  { id: 32, text: "Choose the correct sentence:", options: ["He don’t understand the task", "He doesn’t understand the task", "He didn’t understood the task", "He don’t understands"] },
   { id: 33, text: "The opposite of “confidential” is:", options: ["Private", "Secure", "Public", "Restricted"] },
   { id: 34, text: "Which word best fits? “Please ___ the report before submission.”", options: ["Look", "See", "Check", "Watch"] },
   { id: 35, text: "A professional email should be:", options: ["Emotional", "Casual", "Clear and polite", "Long and detailed"] },
@@ -455,7 +259,6 @@ const MCQ = [
   { id: 43, text: "Choose the correct sentence:", options: ["We was late", "We were late", "We is late", "We be late"] },
   { id: 44, text: "Which is the best closing?", options: ["Bye", "Cheers mate", "Regards", "See ya"] },
   { id: 45, text: "Which word means “on time”?", options: ["Delay", "Punctual", "Late", "Ignore"] },
-
   { id: 46, text: "The main purpose of teamwork is to:", options: ["Reduce effort", "Share responsibility", "Achieve common goals", "Avoid work"] },
   { id: 47, text: "What should an intern do if unsure about a task?", options: ["Guess", "Ignore", "Ask for clarification", "Delay"] },
   { id: 48, text: "Confidential information should be:", options: ["Shared with friends", "Posted online", "Protected", "Ignored"] },
@@ -471,7 +274,6 @@ const MCQ = [
   { id: 58, text: "An intern should report to:", options: ["Anyone", "Supervisor", "Friends", "No one"] },
   { id: 59, text: "Which is most important at work?", options: ["Talent only", "Attitude only", "Skills only", "Attitude and skills"] },
   { id: 60, text: "Which action builds trust?", options: ["Hiding mistakes", "Taking credit for others’ work", "Being honest", "Avoiding responsibility"] },
-
   { id: 61, text: "You are given a task outside your comfort zone. What do you do?", options: ["Refuse", "Delay", "Try to learn and attempt", "Complain"] },
   { id: 62, text: "A teammate is not contributing. What should you do FIRST?", options: ["Complain to management", "Ignore", "Speak politely to the teammate", "Do their work"] },
   { id: 63, text: "You make a mistake. What is the best response?", options: ["Hide it", "Blame others", "Inform supervisor and fix it", "Wait"] },
@@ -486,7 +288,7 @@ const MCQ = [
   { id: 72, text: "What should you do if you finish work early?", options: ["Leave", "Relax", "Ask for more work", "Use phone"] },
   { id: 73, text: "Ethical behavior means:", options: ["Doing what is easy", "Doing what is right", "Doing what benefits you", "Doing nothing"] },
   { id: 74, text: "What motivates good performance?", options: ["Fear", "Learning and growth", "Avoiding responsibility", "Competition only"] },
-  { id: 75, text: "Which is a positive workplace habit?", options: ["Procrastination", "Punctuality", "Excuses", "Complaints"] },
+  { id: 75, text: "Which is a positive workplace habit?", options: ["Procrastination", "Punctuality", "Excuses", "Complaints"] }
 ];
 
 const WRITING = [
@@ -494,14 +296,12 @@ const WRITING = [
   { id: 77, text: "Describe a situation where you took responsibility." },
   { id: 78, text: "What do you expect to learn during this internship?" },
   { id: 79, text: "How do you handle feedback or criticism?" },
-  { id: 80, text: "Where do you see yourself in 3–5 years?" },
+  { id: 80, text: "Where do you see yourself in 3–5 years?" }
 ];
 
-/** Render **/
+/** 3. RENDERING **/
 function escapeHtml(str) {
-  return String(str).replace(/[&<>"']/g, s => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  }[s]));
+  return String(str).replace(/[&<>"']/g, s => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[s]));
 }
 
 function renderMCQ(q) {
@@ -534,263 +334,164 @@ function renderWriting(w) {
 function renderAll() {
   const container = document.getElementById("form");
   container.innerHTML = "";
-
-  // Sections A–E
   for (const sec of SECTIONS) {
     const secDiv = document.createElement("div");
     secDiv.className = "section";
     secDiv.id = sec.id;
-    secDiv.innerHTML = `
-      <div class="section-head">
-        <h3 class="section-title">${escapeHtml(sec.title)}</h3>
-        <div class="section-badge">Q${sec.from}–Q${sec.to}</div>
-      </div>
-    `;
+    secDiv.innerHTML = `<div class="section-head"><h3 class="section-title">${escapeHtml(sec.title)}</h3><div class="section-badge">Q${sec.from}–Q${sec.to}</div></div>`;
     for (let qid = sec.from; qid <= sec.to; qid++) {
       const q = MCQ.find(x => x.id === qid);
-      secDiv.appendChild(renderMCQ(q));
+      if(q) secDiv.appendChild(renderMCQ(q));
     }
     container.appendChild(secDiv);
   }
-
-  // Section F
   const writeDiv = document.createElement("div");
   writeDiv.className = "section";
   writeDiv.id = "secF";
-  writeDiv.innerHTML = `
-    <div class="section-head">
-      <h3 class="section-title">SECTION F: SHORT WRITING (5 Questions)</h3>
-      <div class="section-badge">Q76–Q80</div>
-    </div>
-    <div class="muted">Answer briefly (4–6 lines each)</div>
-  `;
+  writeDiv.innerHTML = `<div class="section-head"><h3 class="section-title">SECTION F: SHORT WRITING</h3><div class="section-badge">Q76–Q80</div></div>`;
   for (const w of WRITING) writeDiv.appendChild(renderWriting(w));
   container.appendChild(writeDiv);
 }
 
-/** Answer collection **/
+/** 4. LOGIC & SUBMISSION **/
 function collectAnswers() {
   const mcqAnswers = [];
   for (let i = 1; i <= 75; i++) {
     const checked = document.querySelector(`input[name="mcq_${i}"]:checked`);
     mcqAnswers.push(checked ? Number(checked.value) : null);
   }
-
   const writingAnswers = [];
   for (let i = 76; i <= 80; i++) {
     const ta = document.querySelector(`textarea[name="writing_${i}"]`);
     writingAnswers.push(ta ? ta.value.trim() : "");
   }
-
   return { mcqAnswers, writingAnswers };
 }
 
-/** Progress indicator **/
 function computeAnswered() {
-  let answered = 0;
-
-  // Name counts as answered if filled
-  const name = document.getElementById("name").value.trim();
-  if (name) answered++;
-
-  // MCQs answered
-  for (let i = 1; i <= 75; i++) {
-    if (document.querySelector(`input[name="mcq_${i}"]:checked`)) answered++;
-  }
-
-  // Writing answered (non-empty)
+  let count = document.getElementById("name").value.trim() ? 1 : 0;
+  for (let i = 1; i <= 75; i++) if (document.querySelector(`input[name="mcq_${i}"]:checked`)) count++;
   for (let i = 76; i <= 80; i++) {
     const ta = document.querySelector(`textarea[name="writing_${i}"]`);
-    if (ta && ta.value.trim().length > 0) answered++;
+    if (ta && ta.value.trim().length > 0) count++;
   }
-
-  return answered;
+  return count;
 }
 
 function updateProgress() {
-  const total = 81; // 1 name + 75 mcq + 5 writing
+  const total = 81;
   const answered = computeAnswered();
-
-  const pct = Math.max(0, Math.min(100, Math.round((answered / total) * 100)));
+  const pct = Math.round((answered / total) * 100);
   document.getElementById("progressText").textContent = `Progress: ${answered}/${total} answered (${pct}%)`;
   document.getElementById("progressBar").style.width = pct + "%";
 }
 
-/** Autosave **/
-function loadState() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : null;
-  } catch { return null; }
-}
-
 function saveState() {
   if (submitted) return;
-
   const name = document.getElementById("name").value.trim();
   const { mcqAnswers, writingAnswers } = collectAnswers();
-  const st = { name, mcqAnswers, writingAnswers, startedAt };
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(st));
-
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({ name, mcqAnswers, writingAnswers, startedAt }));
   const el = document.getElementById("autosaveStatus");
   el.textContent = "Auto-saved.";
-  setTimeout(() => { el.textContent = ""; }, 900);
+  setTimeout(() => { el.textContent = ""; }, 1000);
 }
 
 function restoreState() {
-  const st = loadState();
-  if (!st) return;
-
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+  const st = JSON.parse(raw);
   if (st.name) document.getElementById("name").value = st.name;
-
-  if (Array.isArray(st.mcqAnswers) && st.mcqAnswers.length === 75) {
-    for (let i = 1; i <= 75; i++) {
-      const v = st.mcqAnswers[i - 1];
-      if (v === 0 || v === 1 || v === 2 || v === 3) {
-        const input = document.querySelector(`input[name="mcq_${i}"][value="${v}"]`);
+  if (st.mcqAnswers) {
+    st.mcqAnswers.forEach((v, i) => {
+      if (v !== null) {
+        const input = document.querySelector(`input[name="mcq_${i+1}"][value="${v}"]`);
         if (input) input.checked = true;
       }
-    }
+    });
   }
-
-  if (Array.isArray(st.writingAnswers) && st.writingAnswers.length === 5) {
-    for (let i = 76; i <= 80; i++) {
-      const ta = document.querySelector(`textarea[name="writing_${i}"]`);
-      if (ta) ta.value = st.writingAnswers[i - 76] || "";
-    }
+  if (st.writingAnswers) {
+    st.writingAnswers.forEach((v, i) => {
+      const ta = document.querySelector(`textarea[name="writing_${i+76}"]`);
+      if (ta) ta.value = v;
+    });
   }
 }
 
-/** Timer **/
-function startTimer() {
-  const timerEl = document.getElementById("timer");
-  const t = setInterval(() => {
-    const remaining = deadline - Date.now();
-
-    if (remaining <= 0) {
-      timerEl.textContent = "Time is up — submitting…";
-      clearInterval(t);
-      submitTest(true);
-      return;
-    }
-
-    const totalSec = Math.floor(remaining / 1000);
-    const mm = String(Math.floor(totalSec / 60)).padStart(2, "0");
-    const ss = String(totalSec % 60).padStart(2, "0");
-    timerEl.textContent = `Time left: ${mm}:${ss}`;
-  }, 250);
-}
-
-/** Submit **/
 async function submitTest(auto = false) {
   if (submitted) return;
-  submitted = true;
+  
+  const name = document.getElementById("name").value.trim();
+  if (!name) {
+    alert("Please enter your full name.");
+    return;
+  }
+  
+  if (!auto && !confirm("Are you sure you want to submit?")) return;
 
+  submitted = true;
   const status = document.getElementById("status");
   const btn = document.getElementById("submitBtn");
   btn.disabled = true;
-  status.textContent = auto ? "Auto-submitting…" : "Submitting…";
-  status.className = "small";
-
-  if (!SCRIPT_URL || !SCRIPT_URL.includes("/exec")) {
-    status.textContent = "Error: SCRIPT_URL is not set correctly.";
-    status.className = "warn";
-    btn.disabled = false;
-    submitted = false;
-    return;
-  }
-
-  const name = document.getElementById("name").value.trim();
-  if (!name) {
-    status.textContent = "Please enter your full name before submitting.";
-    status.className = "warn";
-    btn.disabled = false;
-    submitted = false;
-    return;
-  }
-
-  // Confirmation for manual submit only
-  if (!auto) {
-    const ok = confirm("Are you sure you want to submit? You cannot edit after submission.");
-    if (!ok) {
-      btn.disabled = false;
-      submitted = false;
-      status.textContent = "Submission cancelled. You can continue the test.";
-      status.className = "muted";
-      return;
-    }
-  }
+  status.textContent = "Submitting...";
 
   const { mcqAnswers, writingAnswers } = collectAnswers();
   const payload = { name, mcqAnswers, writingAnswers, startedAt, submittedAt: Date.now() };
 
   try {
-  const res = await fetch(SCRIPT_URL, {
-    method: "POST",
-    // Sending as text/plain avoids "Preflight" CORS errors in many browsers
-    headers: { "Content-Type": "text/plain;charset=utf-8" }, 
-    body: JSON.stringify(payload),
-    mode: "cors" 
-  });
+    const res = await fetch(SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload),
+      mode: "cors"
+    });
 
-  // Handle the response as text first
-  const resultText = await res.text();
-  let resultJson;
+    const text = await res.text();
+    let json;
+    try { json = JSON.parse(text); } catch(e) { if(res.ok) json = {ok:true}; else throw e; }
 
-  try {
-    resultJson = JSON.parse(resultText);
+    if (json.ok) {
+      status.textContent = "Submitted successfully.";
+      status.className = "ok";
+      localStorage.removeItem(STORAGE_KEY);
+      clearInterval(autosaveInterval);
+      document.getElementById("form").innerHTML = "<div class='panel'><h2>Submission Successful</h2><p>Thank you for completing the assessment. You may now close this window.</p></div>";
+    } else {
+      throw new Error(json.error || "Submit failed");
+    }
   } catch (e) {
-    // If it's not JSON but the status is 200 (OK), it likely worked!
-    if (res.ok) resultJson = { ok: true };
-    else throw new Error("Server error: " + res.status);
+    status.textContent = "Error: " + e.message;
+    status.className = "warn";
+    submitted = false;
+    btn.disabled = false;
   }
-
-  if (resultJson.ok) {
-    status.textContent = "Submitted successfully. Thank you.";
-    status.className = "ok";
-    document.getElementById("submitBtn").style.display = "none";
-    localStorage.removeItem(STORAGE_KEY);
-    if (autosaveInterval) clearInterval(autosaveInterval);
-  } else {
-    throw new Error(resultJson.error || "Submission failed");
-  }
-
-} catch (e) {
-  // This is where your "Fetch Error" was likely being caught before
-  status.textContent = `Error: ${e.message}`;
-  status.className = "warn";
-  btn.disabled = false;
-  submitted = false;
 }
 
-/** Wire up **/
+/** 5. INITIALIZE **/
 renderAll();
 restoreState();
-startTimer();
 updateProgress();
 
-autosaveInterval = setInterval(() => { saveState(); updateProgress(); }, 20000);
-
-document.addEventListener("change", () => { saveState(); updateProgress(); });
-document.addEventListener("input", (e) => {
-  if (e.target && (e.target.matches("textarea") || e.target.matches("#name"))) {
-    saveState();
-    updateProgress();
+setInterval(() => {
+  const rem = deadline - Date.now();
+  const el = document.getElementById("timer");
+  if (rem <= 0) {
+    el.textContent = "Time's up!";
+    submitTest(true);
+  } else {
+    const sec = Math.floor(rem/1000);
+    el.textContent = `Time left: ${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`;
   }
-});
+}, 1000);
 
-// also update progress on radio clicks (important)
-document.addEventListener("click", (e) => {
-  if (e.target && e.target.matches('input[type="radio"]')) updateProgress();
-});
-
+autosaveInterval = setInterval(() => { saveState(); updateProgress(); }, 15000);
+document.addEventListener("input", updateProgress);
+document.addEventListener("change", updateProgress);
 document.getElementById("submitBtn").addEventListener("click", () => submitTest(false));
-</script>
 
-  </div>
-</div>
+</script>
 </body>
 </html>
+
 
 
 
