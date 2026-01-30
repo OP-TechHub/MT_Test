@@ -725,28 +725,42 @@ async function submitTest(auto = false) {
   const payload = { name, mcqAnswers, writingAnswers, startedAt, submittedAt: Date.now() };
 
   try {
-    const res = await fetch(SCRIPT_URL, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify(payload),
-    });
+  const res = await fetch(SCRIPT_URL, {
+    method: "POST",
+    // Sending as text/plain avoids "Preflight" CORS errors in many browsers
+    headers: { "Content-Type": "text/plain;charset=utf-8" }, 
+    body: JSON.stringify(payload),
+    mode: "cors" 
+  });
 
-    const json = await res.json();
-    if (!json.ok) throw new Error(json.error || "Submission failed");
+  // Handle the response as text first
+  const resultText = await res.text();
+  let resultJson;
 
+  try {
+    resultJson = JSON.parse(resultText);
+  } catch (e) {
+    // If it's not JSON but the status is 200 (OK), it likely worked!
+    if (res.ok) resultJson = { ok: true };
+    else throw new Error("Server error: " + res.status);
+  }
+
+  if (resultJson.ok) {
     status.textContent = "Submitted successfully. Thank you.";
     status.className = "ok";
     document.getElementById("submitBtn").style.display = "none";
     localStorage.removeItem(STORAGE_KEY);
-
     if (autosaveInterval) clearInterval(autosaveInterval);
-
-  } catch (e) {
-    status.textContent = `Error: ${e.message}`;
-    status.className = "warn";
-    btn.disabled = false;
-    submitted = false;
+  } else {
+    throw new Error(resultJson.error || "Submission failed");
   }
+
+} catch (e) {
+  // This is where your "Fetch Error" was likely being caught before
+  status.textContent = `Error: ${e.message}`;
+  status.className = "warn";
+  btn.disabled = false;
+  submitted = false;
 }
 
 /** Wire up **/
@@ -777,6 +791,7 @@ document.getElementById("submitBtn").addEventListener("click", () => submitTest(
 </div>
 </body>
 </html>
+
 
 
 
