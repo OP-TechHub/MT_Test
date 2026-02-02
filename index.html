@@ -198,7 +198,9 @@ const STORAGE_KEY = "intern_test_v1";
 
 /** 2. STATE **/
 let submitted = false;
+let timeUp = false;
 let autosaveInterval = null;
+let timerInterval = null;
 const startedAt = (function(){
   const saved = localStorage.getItem(STORAGE_KEY);
   return saved ? JSON.parse(saved).startedAt : Date.now();
@@ -417,6 +419,22 @@ function restoreState() {
   }
 }
 
+function stopTimers() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  if (autosaveInterval) {
+    clearInterval(autosaveInterval);
+    autosaveInterval = null;
+  }
+}
+
+function setAnswersDisabled(disabled) {
+  document.querySelectorAll('input[type="radio"]').forEach(el => { el.disabled = disabled; });
+  document.querySelectorAll('textarea').forEach(el => { el.disabled = disabled; });
+}
+
 async function submitTest(auto = false) {
   if (submitted) return;
   
@@ -428,6 +446,7 @@ async function submitTest(auto = false) {
   
   if (!auto && !confirm("Are you sure you want to submit?")) return;
 
+  stopTimers();
   submitted = true;
   const status = document.getElementById("status");
   const btn = document.getElementById("submitBtn");
@@ -471,12 +490,17 @@ renderAll();
 restoreState();
 updateProgress();
 
-setInterval(() => {
+timerInterval = setInterval(() => {
   const rem = deadline - Date.now();
   const el = document.getElementById("timer");
   if (rem <= 0) {
-    el.textContent = "Time's up!";
-    submitTest(true);
+    if (!timeUp) {
+      timeUp = true;
+      el.textContent = "Time's up!";
+      setAnswersDisabled(true);
+      stopTimers();
+      alert("Time is up. Please enter your full name and submit the test.");
+    }
   } else {
     const sec = Math.floor(rem/1000);
     el.textContent = `Time left: ${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`;
