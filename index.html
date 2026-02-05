@@ -169,7 +169,10 @@
         <div class="grid two">
           <div>
             <h3 class="h3">Candidate details</h3>
-            <input id="name" type="text" placeholder="Enter your full name" required />
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+              <input id="name" type="text" placeholder="Enter your full name" required style="flex:1; min-width:240px;" />
+              <button class="btn" id="startBtn">Start Test</button>
+            </div>
             <div style="margin-top:10px" class="muted" id="autosaveStatus"></div>
           </div>
           <div>
@@ -199,13 +202,11 @@ const STORAGE_KEY = "intern_test_v1";
 /** 2. STATE **/
 let submitted = false;
 let timeUp = false;
+let testStarted = false;
 let autosaveInterval = null;
 let timerInterval = null;
-const startedAt = (function(){
-  const saved = localStorage.getItem(STORAGE_KEY);
-  return saved ? JSON.parse(saved).startedAt : Date.now();
-})();
-const deadline = startedAt + DURATION_MS;
+let startedAt = null;
+let deadline = null;
 
 const SECTIONS = [
   { id: "secA", title: "SECTION A: IQ & COGNITIVE ABILITY", from: 1, to: 15 },
@@ -389,7 +390,7 @@ function updateProgress() {
 }
 
 function saveState() {
-  if (submitted) return;
+  if (submitted || !testStarted) return;
   const name = document.getElementById("name").value.trim();
   const { mcqAnswers, writingAnswers } = collectAnswers();
   localStorage.setItem(STORAGE_KEY, JSON.stringify({ name, mcqAnswers, writingAnswers, startedAt }));
@@ -398,25 +399,15 @@ function saveState() {
   setTimeout(() => { el.textContent = ""; }, 1000);
 }
 
-function restoreState() {
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if (!raw) return;
-  const st = JSON.parse(raw);
-  if (st.name) document.getElementById("name").value = st.name;
-  if (st.mcqAnswers) {
-    st.mcqAnswers.forEach((v, i) => {
-      if (v !== null) {
-        const input = document.querySelector(`input[name="mcq_${i+1}"][value="${v}"]`);
-        if (input) input.checked = true;
-      }
-    });
-  }
-  if (st.writingAnswers) {
-    st.writingAnswers.forEach((v, i) => {
-      const ta = document.querySelector(`textarea[name="writing_${i+76}"]`);
-      if (ta) ta.value = v;
-    });
-  }
+function resetFormValues() {
+  document.getElementById("name").value = "";
+  document.querySelectorAll('input[type="radio"]').forEach(el => { el.checked = false; });
+  document.querySelectorAll("textarea").forEach(el => { el.value = ""; });
+}
+
+function setTimerIdleText(message = "Click Start Test") {
+  const el = document.getElementById("timer");
+  el.innerHTML = `<span class="dot"></span>${message}`;
 }
 
 function stopTimers() {
@@ -435,8 +426,67 @@ function setAnswersDisabled(disabled) {
   document.querySelectorAll('textarea').forEach(el => { el.disabled = disabled; });
 }
 
+function setNameDisabled(disabled) {
+  document.getElementById("name").disabled = disabled;
+}
+
+function updateTimerTick() {
+  if (!testStarted || deadline === null) return;
+  const rem = deadline - Date.now();
+  const el = document.getElementById("timer");
+  if (rem <= 0) {
+    if (!timeUp) {
+      timeUp = true;
+      testStarted = false;
+      el.textContent = "Time's up!";
+      setAnswersDisabled(true);
+      setNameDisabled(false);
+      stopTimers();
+      document.getElementById("submitBtn").disabled = false;
+      alert("Time is up. Please enter your full name and submit the test.");
+    }
+  } else {
+    const sec = Math.floor(rem/1000);
+    el.textContent = `Time left: ${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`;
+  }
+}
+
+function startTest() {
+  const hasValues = computeAnswered() > 0;
+  if (hasValues && !submitted && !timeUp && !testStarted) {
+    if (!confirm("Start a new test and clear current answers?")) return;
+  }
+  if (testStarted) {
+    if (!confirm("The test is running. Restart and clear all current answers?")) return;
+  }
+
+  stopTimers();
+  localStorage.removeItem(STORAGE_KEY);
+  resetFormValues();
+  submitted = false;
+  timeUp = false;
+  testStarted = true;
+  startedAt = Date.now();
+  deadline = startedAt + DURATION_MS;
+  setNameDisabled(false);
+  setAnswersDisabled(false);
+  document.getElementById("submitBtn").disabled = false;
+  document.getElementById("status").textContent = "";
+  document.getElementById("status").className = "small";
+  document.getElementById("startBtn").textContent = "Restart Test";
+  document.getElementById("autosaveStatus").textContent = "";
+  updateProgress();
+  updateTimerTick();
+  autosaveInterval = setInterval(() => { saveState(); updateProgress(); }, 15000);
+  timerInterval = setInterval(updateTimerTick, 1000);
+}
+
 async function submitTest(auto = false) {
   if (submitted) return;
+  if (!testStarted && !timeUp) {
+    alert("Click Start Test before submitting.");
+    return;
+  }
   
   const name = document.getElementById("name").value.trim();
   if (!name) {
@@ -446,10 +496,15 @@ async function submitTest(auto = false) {
   
   if (!auto && !confirm("Are you sure you want to submit?")) return;
 
+  const shouldResumeIfFail = testStarted && !timeUp;
   stopTimers();
   submitted = true;
   const status = document.getElementById("status");
   const btn = document.getElementById("submitBtn");
+  const startBtn = document.getElementById("startBtn");
+  startBtn.disabled = true;
+  setNameDisabled(true);
+  setAnswersDisabled(true);
   btn.disabled = true;
   status.textContent = "Submitting...";
 
@@ -471,9 +526,14 @@ async function submitTest(auto = false) {
     if (json.ok) {
       status.textContent = "Submitted successfully.";
       status.className = "ok";
+      testStarted = false;
       localStorage.removeItem(STORAGE_KEY);
-      clearInterval(autosaveInterval);
-      document.getElementById("form").innerHTML = "<div class='panel'><h2>Submission Successful</h2><p>Thank you for completing the assessment. You may now close this window.</p></div>";
+      resetFormValues();
+      document.getElementById("autosaveStatus").textContent = "";
+      updateProgress();
+      setTimerIdleText("Submitted. Click Start Test to run again.");
+      document.getElementById("startBtn").textContent = "Start Test";
+      startBtn.disabled = false;
     } else {
       throw new Error(json.error || "Submit failed");
     }
@@ -481,35 +541,29 @@ async function submitTest(auto = false) {
     status.textContent = "Error: " + e.message;
     status.className = "warn";
     submitted = false;
+    setNameDisabled(false);
+    setAnswersDisabled(false);
     btn.disabled = false;
+    startBtn.disabled = false;
+    if (shouldResumeIfFail) {
+      testStarted = true;
+      autosaveInterval = setInterval(() => { saveState(); updateProgress(); }, 15000);
+      timerInterval = setInterval(updateTimerTick, 1000);
+      updateTimerTick();
+    }
   }
 }
 
 /** 5. INITIALIZE **/
 renderAll();
-restoreState();
+setNameDisabled(true);
+setAnswersDisabled(true);
+setTimerIdleText();
+document.getElementById("submitBtn").disabled = true;
 updateProgress();
-
-timerInterval = setInterval(() => {
-  const rem = deadline - Date.now();
-  const el = document.getElementById("timer");
-  if (rem <= 0) {
-    if (!timeUp) {
-      timeUp = true;
-      el.textContent = "Time's up!";
-      setAnswersDisabled(true);
-      stopTimers();
-      alert("Time is up. Please enter your full name and submit the test.");
-    }
-  } else {
-    const sec = Math.floor(rem/1000);
-    el.textContent = `Time left: ${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`;
-  }
-}, 1000);
-
-autosaveInterval = setInterval(() => { saveState(); updateProgress(); }, 15000);
 document.addEventListener("input", updateProgress);
 document.addEventListener("change", updateProgress);
+document.getElementById("startBtn").addEventListener("click", startTest);
 document.getElementById("submitBtn").addEventListener("click", () => submitTest(false));
 
 </script>
